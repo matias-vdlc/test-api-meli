@@ -1,0 +1,23 @@
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional: dotenv environment variables file
+.env
+
+# Optional: macOS generated files
+.DS_Store
+
+# Optional: Windows generated file
+Thumbs.db
+
+# Optional: VSCode directory
+.vscode/
+
+# Optional: npm debug logs
+npm-debug.log*
