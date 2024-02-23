@@ -23,7 +23,9 @@ app.get("/api/items", async (req, res) => {
   }
 
   if (q.length > 100) {
-    return res.status(400).send({ error: "Query parameter exceeds maximum length of 100 characters" });
+    return res.status(400).send({
+      error: "Query parameter exceeds maximum length of 100 characters",
+    });
   }
 
   try {
@@ -64,9 +66,17 @@ app.get("/api/items", async (req, res) => {
 app.get("/api/items/:id", async (req, res) => {
   const itemId = req.params.id;
 
+  const validIdRegex = /^MLA\d+$/;
+
+  // If the Id does not match the regex pattern, return error
+  if (!validIdRegex.test(itemId)) {
+    return res.status(400).send({ error: "Invalid item ID format." });
+  }
+
   try {
     const { itemData, descriptionData } = await fetchItemDetails(itemId);
 
+    // TODO: review meli api, sold_quantity prop not found
     const formattedResponse = {
       author: {
         name: "Matias",
@@ -82,9 +92,9 @@ app.get("/api/items/:id", async (req, res) => {
         },
         picture: itemData.thumbnail,
         condition: itemData.condition,
-        free_shipping: itemData.shipping?.free_shipping ?? null,
+        free_shipping: itemData.shipping?.free_shipping,
         sold_quantity: itemData.sold_quantity ?? null,
-        description: descriptionData.plain_text ?? null,
+        description: descriptionData.plain_text,
       },
     };
 
