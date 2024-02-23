@@ -4,7 +4,7 @@
 Esta aplicación Express funciona como un wrapper para las API de Mercado Libre y filtra los datos recibidos de estas para alimentar a una aplicacion frontend.
 
 ## Endpoints
-La app corre sobre el puerto 4000 en localhost - http://localhost:4000
+La app corre sobre el puerto 4000 en [http://localhost:4000](http://localhost:4000).
 
 - [/api/items?q=:query](http://localhost:4000/api/items?q=:query)
 
