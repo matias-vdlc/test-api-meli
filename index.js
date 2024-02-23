@@ -1,11 +1,11 @@
 const express = require("express");
-const axios = require("axios");
 const cors = require("cors");
 const {
   fetchSearchData,
   findMostCommonCategory,
   getCategoryPath,
 } = require("./helpers/searchService");
+const { fetchItemDetails } = require("./helpers/itemsService");
 
 const app = express();
 
@@ -65,16 +65,7 @@ app.get("/api/items/:id", async (req, res) => {
   const itemId = req.params.id;
 
   try {
-    const itemUrl = `https://api.mercadolibre.com/items/${itemId}`;
-    const itemDescriptionUrl = `https://api.mercadolibre.com/items/${itemId}/description`;
-
-    const [itemResponse, itemDescriptionResponse] = await Promise.all([
-      axios.get(itemUrl),
-      axios.get(itemDescriptionUrl),
-    ]);
-
-    const itemData = itemResponse.data;
-    const descriptionData = itemDescriptionResponse.data;
+    const { itemData, descriptionData } = await fetchItemDetails(itemId);
 
     const formattedResponse = {
       author: {
@@ -107,5 +98,5 @@ app.get("/api/items/:id", async (req, res) => {
 });
 
 app.listen(4000, () => {
-  console.log("Example app listening on port 4000!");
+  console.log("Meli API middleware listening on port 4000");
 });
